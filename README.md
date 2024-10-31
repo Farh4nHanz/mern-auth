@@ -58,7 +58,7 @@ Open your browser and navigate to `http://localhost:5173` to view the applicatio
 
 ## Configuration
 
-To run the application, ensure you have a .env.local file with the following variables:
+To run the application, ensure you have a .env file with the following variables:
 
 ```makefile
 NODE_ENV=development
