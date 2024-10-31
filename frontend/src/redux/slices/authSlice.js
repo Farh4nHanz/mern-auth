@@ -35,7 +35,7 @@ export const register = createAsyncThunk(
       }
     } catch (err) {
       console.error(err);
-      return rejectWithValue(err?.response?.data?.message);
+      return rejectWithValue(err?.response?.data?.message || "Failed to register! Try again later.");
     }
   }
 );
