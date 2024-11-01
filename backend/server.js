@@ -2,7 +2,7 @@ import e from "express";
 import path from "path";
 import cors from "cors";
 import logger from "morgan";
-import cookieParser from "cookie-parser";;
+import cookieParser from "cookie-parser";
 
 // database
 import { connectDB } from "./config/db.js";
