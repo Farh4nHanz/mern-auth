@@ -6,37 +6,36 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
+    name: deploy
+    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/deploy')
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: Set Git User
-        run: |
-          git config --global user.email "${{ secrets.HEROKU_EMAIL }}"
-          git config --global user.name "Farh4nHanz"
-
-      - name: Install Heroku CLI
-        run: |
-          curl https://cli-assets.heroku.com/install.sh | sh
-
-      - name: Login to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          echo -e "machine api.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY\nmachine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY" > ~/.netrc
-
-      - name: Install Dependencies
-        run: |
-          cd backend
-          npm install
-
+      - uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
       - name: Deploy to Heroku
+        env:
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+          HEROKU_LOGIN: ${{ secrets.HEROKU_LOGIN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git || true
-          git add .
-          git commit -m "Deploying to Heroku" || echo "No changes to commit"
-          git push heroku main --force
+          cat > ~/.netrc << EOF
+          machine api.heroku.com
+            login $HEROKU_LOGIN
+            password $HEROKU_API_KEY
+          machine git.heroku.com
+            login $HEROKU_LOGIN
+            password $HEROKU_API_KEY
+          EOF
+          PR_NUMBER=$(jq -r ".issue.number" "$GITHUB_EVENT_PATH")
+          URI=https://api.github.com
+          API_HEADER="Accept: application/vnd.github.v3+json"
+          AUTH_HEADER="Authorization: token $GITHUB_TOKEN"
+          pr_resp=$(curl -s -H "${AUTH_HEADER}" -H "${API_HEADER}" \
+                             "${URI}/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER")
+          HEAD_BRANCH=$(echo "$pr_resp" | jq -r .head.ref)
+          echo "HEAD_BRANCH is $HEAD_BRANCH"
+          git push --force https://git.heroku.com/$HEROKU_APP_NAME.git \
+            "origin/${HEAD_BRANCH}:master"
