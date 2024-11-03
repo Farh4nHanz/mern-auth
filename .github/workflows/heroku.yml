@@ -22,9 +22,9 @@ jobs:
         run: |
           echo -e "machine api.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY\nmachine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY" > ~/.netrc
 
-      - name: Deploy to Heroku
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      - name: Deploy Backend Subdirectory to Heroku
         run: |
-          git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
+          git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git || true
+          git fetch heroku main
+          git subtree pull --prefix backend heroku main -m "Merge Heroku changes into backend"
           git subtree push --prefix backend heroku main
