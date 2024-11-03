@@ -39,17 +39,17 @@ cd mern-auth
 Install backend dependencies and start the server:
 
 ```bash
-npm install
-npm run server
+npm install --prefix backend
+npm run dev --prefix backend
 ```
 
 ### 4. Install Frontend Dependencies
 
-Install frontend dependencies, and start the client:
+Create a new terminal and install the frontend dependencies, then start the client:
 
 ```bash
 npm install --prefix frontend
-npm run client
+npm run dev --prefix frontend
 ```
 
 ### 5. Open the application in browser
@@ -58,36 +58,42 @@ Open your browser and navigate to `http://localhost:5173` to view the applicatio
 
 ## Configuration
 
-To run the application, ensure you have a .env file with the following variables:
+To ensure your application runs well, you need a little configuration for the variables in the .env file. Since the project structure is separated into backend and frontend, you need to create 2 .env files in each folder.
 
-```makefile
-NODE_ENV=development
-PORT=5001
+- **Create a new file named `.env` on `backend` folder and add the following variables**:
 
-# DB SETUP
-MONGO_URI=mongodb+srv://<username>:<password>@cluster0.br1ts1h.mongodb.net/<db_name>
+  ```makefile
+  NODE_ENV=development
+  PORT=5001
 
-# FRONTEND URL
-FRONTEND_URL=http://localhost:5173
+  # DB SETUP
+  MONGO_URI=mongodb+srv://<username>:<password>@cluster0.br1ts1h.mongodb.net/<db_name>
 
-# API URL
-VITE_API_URL=http://localhost:5001/api/v1
+  # FRONTEND URL
+  FRONTEND_URL=http://localhost:5173
+  ```
 
-# RESET PASSWORD
-VITE_RESET_PASSWORD_REDIRECT=http://localhost:5173/login
+- **Create a new file named `.env` on `frontend` folder and add the following variables**:
 
-# FIREBASE CONFIG
-VITE_FIREBASE_API_KEY=your_firebase_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-VITE_FIREBASE_APP_ID=your_firebase_app_id
-```
+  ```makefile
+  # API URL
+  VITE_API_URL=http://localhost:5001/api/v1
+
+  # RESET PASSWORD
+  VITE_RESET_PASSWORD_REDIRECT=http://localhost:5173/login
+
+  # FIREBASE CONFIG
+  VITE_FIREBASE_API_KEY=your_firebase_api_key
+  VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+  VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
+  VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+  VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+  VITE_FIREBASE_APP_ID=your_firebase_app_id
+  ```
 
 ### Note
 
-Make sure to replace placeholders like `your_mongodb_connection_string`, and Firebase configuration values with your actual credentials.
+Make sure to replace placeholders like `username`, `password`, `db_name`, and Firebase configuration values with your actual credentials.
 
 ## License
 
