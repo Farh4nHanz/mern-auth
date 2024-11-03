@@ -39,6 +39,7 @@ import userRoute from "./routes/userRoute.js";
 
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
+app.use("*", notFound);
 
 app.use(errorHandler); // handling error
 
