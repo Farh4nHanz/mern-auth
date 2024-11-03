@@ -20,7 +20,7 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
-          echo "$HEROKU_API_KEY" | heroku auth:token > ~/.netrc
+          echo -e "machine api.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY\nmachine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY" > ~/.netrc
 
       - name: Deploy to Heroku
         env:
