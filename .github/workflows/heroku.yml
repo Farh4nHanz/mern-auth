@@ -26,5 +26,5 @@ jobs:
         run: |
           git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git || true
           git fetch heroku main
-          git subtree pull --prefix backend heroku main --allow-unrelated-histories -m "Merge Heroku changes into backend"
+          git subtree pull --prefix backend heroku main
           git subtree push --prefix backend heroku main
