@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "dotenvx run -- node server.js",
+    "dev": "nodemon -L --env-file=.env server.js"
+  },
+  "keywords": [],
+  "author": "Hanz",
+  "license": "ISC",
+  "description": "Backend for MERN auth with firebase",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.21.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "express-async-handler": "^1.2.0",
+    "firebase-admin": "^12.7.0",
+    "lodash": "^4.17.21",
+    "mongoose": "^8.8.0",
+    "morgan": "^1.10.0"
+  },
+  "type": "module"
+}

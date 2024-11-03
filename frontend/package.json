@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "dotenvx run -f ../.env -- vite",
+    "dev": "dotenvx run -- vite",
     "build": "dotenvx run -- vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -31,6 +31,7 @@
     "date-fns": "^3.6.0",
     "firebase": "^11.0.1",
     "framer-motion": "^11.11.10",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.453.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",

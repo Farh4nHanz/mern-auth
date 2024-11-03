@@ -1,5 +1,4 @@
 import e from "express";
-import path from "path";
 import cors from "cors";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
@@ -9,7 +8,6 @@ import { connectDB } from "./config/db.js";
 
 const app = e();
 const PORT = process.env.PORT;
-const __dirname = path.resolve();
 
 app.use(
   cors({
@@ -42,14 +40,6 @@ import userRoute from "./routes/userRoute.js";
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("*", notFound);
-
-// for production
-if (process.env.NODE_ENV === "production") {
-  app.use(e.static(path.join(__dirname, "/frontend/dist")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-  });
-}
 
 app.use(errorHandler); // handling error
 

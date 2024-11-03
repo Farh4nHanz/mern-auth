@@ -6,7 +6,7 @@ const __dirname = path.resolve();
 
 const serviceAccount = JSON.parse(
   readFileSync(
-    path.join(__dirname, "backend", "serviceAccountKey.json"),
+    path.join(__dirname, "serviceAccountKey.json"),
     "utf-8"
   )
 );
