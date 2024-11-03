@@ -1,4 +1,4 @@
-name: Deploy backend to Heroku
+name: Deploy Backend to Heroku
 
 on:
   push:
@@ -17,9 +17,16 @@ jobs:
         run: |
           curl https://cli-assets.heroku.com/install.sh | sh
 
+      - name: Verify Heroku CLI installation
+        run: heroku --version
+
       - name: Add Heroku remote
         run: |
-          heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }}
+          heroku git:remote -a ${{ secrets.HEROKU_APP_NAME }} || echo "Failed to add Heroku remote"
+
+      - name: Check Heroku remote
+        run: |
+          git remote -v
 
       - name: Deploy to Heroku
         env:
