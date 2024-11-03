@@ -27,10 +27,10 @@ jobs:
         run: |
           echo -e "machine api.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY\nmachine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY" > ~/.netrc
 
-      - name: Deploy Backend Subdirectory to Heroku
+      - name: Deploy to Heroku
         run: |
+          cd backend
           git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git || true
-          git fetch heroku main
-          git merge heroku/main --allow-unrelated-histories -m "Merge Heroku changes into backend"
-          git pull heroku main
-          git subtree push --prefix backend heroku main
+          git add .
+          git commit -am "Deploying to Heroku" || echo "No changes to commit"
+          git push heroku main --force
